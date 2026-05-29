@@ -38,6 +38,7 @@ uv run jupyter notebook
 | `docs/` | PDF da atividade e documentação interna |
 | `images/` | Imagens utilizadas nos notebooks |
 | `pyproject.toml` | Dependências e configuração do projeto |
+| `uv.lock` | Lock file com versões fixas das dependências |
 
 ## Resultados
 
