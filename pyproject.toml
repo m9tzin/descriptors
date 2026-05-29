@@ -3,10 +3,13 @@ name = "descriptors"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = "~=3.12"
 dependencies = [
     "jupyter>=1.1.1",
+    "kornia",
+    "kornia-rs",
     "matplotlib>=3.10.9",
     "numpy>=2.4.6",
     "opencv-contrib-python>=4.13.0.92",
+    "torch",
 ]
