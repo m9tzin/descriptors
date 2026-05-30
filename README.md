@@ -88,9 +88,7 @@ Execução local: CPU · PyTorch 2.12.0+cpu · Kornia 0.8.3
 │   └── Fig0438_a__bld_...  # T1
 ├── results/                # Imagens de resultado extraídas dos notebooks (22 figuras)
 ├── docs/
-│   ├── Atividade3_TECA2_20261_rev.pdf
-│   ├── guia-de-estudos.md  # Teoria, observações e perguntas de apresentação
-│   └── apresentacao.md     # Slides Marp com resultados das 4 tarefas
+│   └── Atividade3_TECA2_20261_rev.pdf  # Enunciado completo
 ├── pyproject.toml
 └── uv.lock
 ```
@@ -115,10 +113,6 @@ uv run jupyter notebook
 
 ---
 
-## Documentação
+## Resultados
 
-| Arquivo | Conteúdo |
-|---------|----------|
-| [`docs/guia-de-estudos.md`](docs/guia-de-estudos.md) | Teoria completa, observações dos experimentos e perguntas de apresentação com respostas |
-| [`docs/apresentacao.md`](docs/apresentacao.md) | Slides Marp — abrir com extensão [Marp for VS Code](https://marketplace.visualstudio.com/items?itemName=marp-team.marp-vscode) |
-| [`results/`](results/) | 22 figuras extraídas dos outputs dos notebooks |
+[`results/`](results/) contém 22 figuras extraídas dos outputs dos notebooks (T1–T4).
