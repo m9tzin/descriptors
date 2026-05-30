@@ -13,9 +13,9 @@ style: |
   table { width: 100%; font-size: 0.9em; }
   th { background: #1a3a5c; color: white; }
   tr:nth-child(even) { background: #f0f4f8; }
-  .highlight { background: #fff3cd; padding: 4px 8px; border-radius: 4px; }
   code { background: #f0f4f8; padding: 2px 6px; border-radius: 3px; }
   blockquote { border-left: 4px solid #2e6da4; background: #f0f4f8; padding: 8px 12px; }
+  footer { font-size: 0.75em; color: #555; }
 ---
 
 # Atividade 3 — Pontos de Interesse e Descritores
@@ -25,13 +25,16 @@ style: |
 Henryque Oliveira · Matheus Marinho · Rodrigo Oliveira
 
 ---
+<!-- _footer: "🎤 Henryque" -->
 
 ## Agenda
 
-1. **Tarefa 1** — Espaço de Escala, Pirâmide Gaussiana e DoG
-2. **Tarefa 2** — Descritores Float vs. Binários: Comparação Prática
-3. **Tarefa 3** — Montagem de Panorama (Image Stitching)
-4. **Tarefa 4** — Descritores Neurais com Kornia (DISK)
+| Tarefa | Tema | Apresenta |
+|--------|------|-----------|
+| **T1** | Espaço de Escala, Pirâmide, DoG | Henryque → Matheus → Rodrigo |
+| **T2** | Descritores Float vs. Binários | Henryque → Matheus → Rodrigo |
+| **T3** | Montagem de Panorama (Stitching) | Henryque → Matheus → Rodrigo |
+| **T4** | Descritores Neurais (DISK) | Henryque → Matheus → Rodrigo |
 
 ---
 
@@ -40,6 +43,7 @@ Henryque Oliveira · Matheus Marinho · Rodrigo Oliveira
 ## Espaço de Escala, Visualização e Análise de Descritores
 
 ---
+<!-- _footer: "🎤 Henryque" -->
 
 ## T1 — Conceitos fundamentais
 
@@ -58,10 +62,11 @@ Aproximação eficiente do Laplaciano da Gaussiana:
 Keypoints SIFT = **extremos locais do DoG** em 26 vizinhos (espaço + escala)
 
 ---
+<!-- _footer: "🎤 Henryque" -->
 
 ## T1 — Resultado: Pirâmide e DoG
 
-**3 oitavas · 5 escalas por oitava · par Gaussiana + DoG gerado manualmente**
+**3 oitavas · 5 escalas por oitava · gerado manualmente**
 
 | Oitava | Resolução | σ cresce → | Estruturas visíveis |
 |--------|-----------|-----------|-------------------|
@@ -72,10 +77,11 @@ Keypoints SIFT = **extremos locais do DoG** em 26 vizinhos (espaço + escala)
 > Estruturas finas respondem nas oitavas iniciais · estruturas grandes nas finais
 
 ---
+<!-- _footer: "🎤 Matheus" -->
 
 ## T1 — Resultado: Keypoints SIFT vs AKAZE
 
-**3 imagens · flag `DRAW_RICH_KEYPOINTS` (tamanho = escala, raio = orientação)**
+**3 imagens · `DRAW_RICH_KEYPOINTS` (tamanho = escala · raio = orientação)**
 
 | Imagem | SIFT (kp) | AKAZE (kp) |
 |--------|-----------|------------|
@@ -83,11 +89,12 @@ Keypoints SIFT = **extremos locais do DoG** em 26 vizinhos (espaço + escala)
 | Mona Lisa | **815** | 277 |
 | Fig0438 (Gonzalez) | **686** | 264 |
 
-- SIFT detecta mais keypoints em todas as imagens — menos seletivo
-- AKAZE é mais restritivo (espaço de escala não-linear)
+- SIFT detecta mais keypoints — menos seletivo
+- AKAZE usa espaço de escala não-linear → mais restritivo
 - Regiões planas (céu) → gradiente ≈ 0 → **nenhum keypoint**
 
 ---
+<!-- _footer: "🎤 Rodrigo" -->
 
 ## T1 — Resultado: Descritor SIFT de 128 dimensões
 
@@ -103,10 +110,11 @@ Janela 16×16 → 4×4 sub-regiões → 8 direções por sub-região
 - Vetor normalizado → resistência a variações de iluminação
 
 ---
+<!-- _footer: "🎤 Rodrigo" -->
 
 ## T1 — Resultado: Invariância a Escala
 
-**Mona Lisa redimensionada → keypoints SIFT detectados em cada versão**
+**Mona Lisa redimensionada → keypoints SIFT por versão**
 
 | Escala | Resolução | Keypoints |
 |--------|-----------|-----------|
@@ -114,9 +122,9 @@ Janela 16×16 → 4×4 sub-regiões → 8 direções por sub-região
 | 50% | 480×640 | **240** |
 | 25% | 240×320 | **138** |
 
-> A queda de keypoints **não contradiz** a invariância a escala:
-> a invariância garante que os pontos *que sobrevivem* são reconhecíveis entre escalas —
-> detalhes finos simplesmente deixam de existir nos pixels quando a resolução cai.
+> A queda **não contradiz** a invariância a escala:
+> garante que os pontos *que sobrevivem* são reconhecíveis entre escalas —
+> detalhes finos deixam de existir nos pixels quando a resolução cai.
 
 ---
 
@@ -125,6 +133,7 @@ Janela 16×16 → 4×4 sub-regiões → 8 direções por sub-região
 ## Descritores Float vs. Binários: Comparação Prática
 
 ---
+<!-- _footer: "🎤 Henryque" -->
 
 ## T2 — Float vs. Binário
 
@@ -136,14 +145,15 @@ Janela 16×16 → 4×4 sub-regiões → 8 direções por sub-região
 | Precisão | **Alta** | Moderada |
 
 **Ratio Test de Lowe:** aceita match se `d1 < ratio × d2`
-- Elimina correspondências ambíguas (dois melhores candidatos igualmente próximos)
+- Elimina correspondências ambíguas (dois candidatos igualmente próximos)
 - `ratio=0.75` → ~90% falsos eliminados · ~90% verdadeiros preservados
 
 ---
+<!-- _footer: "🎤 Matheus" -->
 
 ## T2 — Resultado: Matching (ratio = 0.75)
 
-**Par: ursinho1.jpeg × ursinho2.jpeg · 960×1280 px**
+**Par: ursinho1 × ursinho2 · 960×1280 px**
 
 | Método | Distância | KPs | Matches bons | Match (%) |
 |--------|-----------|-----|-------------|-----------|
@@ -156,6 +166,7 @@ Janela 16×16 → 4×4 sub-regiões → 8 direções por sub-região
 - ORB: mais rápido, menos discriminativo neste par
 
 ---
+<!-- _footer: "🎤 Rodrigo" -->
 
 ## T2 — Resultado: Efeito do Ratio Test (SIFT)
 
@@ -168,8 +179,7 @@ Janela 16×16 → 4×4 sub-regiões → 8 direções por sub-região
 
 > Quanto maior o ratio → mais permissivo → mais falsos positivos
 >
-> Para homografia com poucos inliers: usar **0.65–0.70**
-> Para cobertura máxima em cenas difíceis: usar **0.80–0.85**
+> Homografia com poucos inliers: **0.65–0.70** · Cobertura máxima: **0.80–0.85**
 
 ---
 
@@ -178,13 +188,14 @@ Janela 16×16 → 4×4 sub-regiões → 8 direções por sub-região
 ## Montagem de Panorama — Image Stitching
 
 ---
+<!-- _footer: "🎤 Henryque" -->
 
 ## T3 — Pipeline de Stitching
 
 ```
 Detecção (SIFT/ORB)  →  Ratio Test  →  findHomography (USAC_MAGSAC)
-     ↓                                         ↓
-warpPerspective  →  Composição no canvas  →  Panorama
+        ↓                                        ↓
+ warpPerspective  →  Composição no canvas  →  Panorama
 ```
 
 **Homografia (H 3×3)**
@@ -195,32 +206,34 @@ Requer mínimo de **4 correspondências** · preserva linhas retas.
 Variante robusta do RANSAC: sorteia subconjuntos de 4 pares, estima H, conta inliers (erro reprojeção < threshold), repete — descarta outliers automaticamente.
 
 ---
+<!-- _footer: "🎤 Matheus" -->
 
 ## T3 — Resultado: SIFT vs ORB no Stitching
 
-**Par: mesa_esq.jpeg × mesa_dir.jpeg · 960×1280 px**
+**Par: mesa_esq × mesa_dir · 960×1280 px**
 
 | Detector | KP (img1) | Matches | Inliers | Taxa | Qualidade |
 |----------|-----------|---------|---------|------|-----------|
 | SIFT | 2.377 | 336 | 110 | **32.7%** | ❌ abaixo de 60% |
 | ORB | 2.000 | 383 | 235 | **61.4%** | ✅ acima de 60% |
 
-**ORB superou SIFT neste par** — os padrões binários capturaram melhor as texturas da mesa.
+**ORB superou SIFT neste par** — padrões binários capturaram melhor as texturas da mesa.
 
-> Taxa de inliers > 60% = estimativa da homografia confiável.
-> A escolha do melhor detector depende da cena, não há vencedor universal.
+> Taxa de inliers > 60% = homografia confiável.
+> Não há vencedor universal: o melhor detector depende da cena.
 
 ---
+<!-- _footer: "🎤 Rodrigo" -->
 
 ## T3 — Limitações da Composição Simples
 
 A implementação usa sobreposição direta (sem blending):
 
 1. **Costura visível** — sem mistura gradual na região de sobreposição
-2. **Corte de bordas** — translações negativas cortam partes da imagem reprojetada
+2. **Corte de bordas** — translações negativas cortam partes reprojetadas
 3. **Sem ajuste de exposição** — diferenças de brilho entre as fotos permanecem
 
-Para costura suave: *multi-band blending* ou *feather blending* na região de sobreposição.
+Para costura suave em produção: *multi-band blending* ou *feather blending*.
 
 ---
 
@@ -229,6 +242,7 @@ Para costura suave: *multi-band blending* ou *feather blending* na região de so
 ## Descritores Neurais com Kornia (DISK)
 
 ---
+<!-- _footer: "🎤 Henryque" -->
 
 ## T4 — O que é DISK?
 
@@ -240,29 +254,19 @@ Para costura suave: *multi-band blending* ou *feather blending* na região de so
 - Matching: `NORM_L2` (descritores são L2-normalizados)
 
 **Por que ratio = 0.90 e não 0.75?**
-Descritores neurais são mais discriminativos — há menos ambiguidade entre os dois melhores candidatos. Um threshold mais alto ainda filtra bem sem descartar matches corretos.
+Descritores neurais são mais discriminativos — menos ambiguidade entre os dois melhores candidatos. Threshold mais alto ainda filtra bem sem descartar matches corretos.
 
 ---
+<!-- _footer: "🎤 Matheus" -->
 
-## T4 — Resultado: Extração com DISK
+## T4 — Resultado: Extração e Tabela Final
 
-**Par: ursinho1.jpeg × ursinho2.jpeg · CPU (kornia 0.8.3)**
+**Par ursinho · CPU · kornia 0.8.3**
 
 ```
-DISK img1: 2048 kp  |  desc shape: (2048, 128)
-DISK img2: 2048 kp  |  desc shape: (2048, 128)
-
-Matching (ratio=0.90):  58 bons  /  2048 pares candidatos
+DISK: 2048 kp por imagem  |  desc shape: (2048, 128)
+Matching (ratio=0.90): 58 bons / 2048 pares candidatos
 ```
-
-- Modelo pré-treinado `depth` checkpoint (~30 MB, download automático)
-- `pad_if_not_divisible=True` — necessário pela arquitetura U-Net (stride 16)
-
----
-
-## T4 — Tabela Comparativa Final
-
-**Par ursinho · execução local · CPU**
 
 | Método | Tipo | KP | Matches | Ratio |
 |--------|------|----|---------|-------|
@@ -271,10 +275,10 @@ Matching (ratio=0.90):  58 bons  /  2048 pares candidatos
 | AKAZE | Clássico / binário | 1.636 | 36 | 0.75 |
 | **DISK** | **Neural / float** | **2.048** | **58** | **0.90** |
 
-> DISK com ratio=0.90 é comparável ao SIFT com ratio=0.75 neste par de boa iluminação.
-> A vantagem do DISK aparece em variações drásticas de iluminação ou ponto de vista extremo.
+> DISK ≈ SIFT neste par de boa iluminação. Vantagem real aparece em cenas difíceis.
 
 ---
+<!-- _footer: "🎤 Rodrigo" -->
 
 ## T4 — DISK vs. ORB em Sistemas Embarcados
 
@@ -287,6 +291,7 @@ Matching (ratio=0.90):  58 bons  /  2048 pares candidatos
 | Cenário ideal | GPU disponível, cenas difíceis | Embarcado, tempo real |
 
 ---
+<!-- _footer: "🎤 Rodrigo" -->
 
 ## Visão Geral — Os 4 Métodos
 
@@ -298,14 +303,15 @@ Matching (ratio=0.90):  58 bons  /  2048 pares candidatos
 | DISK | Float neural | 128 floats | L2 | 2.048 | 58 | Cenas difíceis, GPU |
 
 ---
+<!-- _footer: "🎤 Rodrigo" -->
 
 ## Conclusão
 
 - **Espaço de escala** é a base teórica de todos os detectores clássicos: DoG aproxima o LoG e localiza extremos multiescala.
-- **Float vs. binário** define a métrica de matching: L2 para gradientes contínuos, Hamming para comparação bit-a-bit.
+- **Float vs. binário** define a métrica de matching: L2 para gradientes contínuos, Hamming para XOR bit-a-bit.
 - **Ratio Test de Lowe** (0.75) é o filtro padrão de ambiguidade — ajustável conforme a aplicação.
-- **Homografia + RANSAC** conecta correspondências pontuais à geometria da cena; taxa de inliers > 60% indica qualidade.
-- **DISK** demonstra que descritores neurais são viáveis e competitivos, mas com custo de inferência e dependência de framework que os tornam inadequados para hardware limitado.
+- **Homografia + RANSAC** conecta correspondências pontuais à geometria da cena; inliers > 60% indica qualidade.
+- **DISK** demonstra que descritores neurais são competitivos, mas custo de inferência e dependência de PyTorch os tornam inadequados para hardware limitado.
 
 ---
 
